@@ -2,10 +2,10 @@
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import LoginBadge from './LoginBadge.vue';
-
-
+import users from '@/data/users.json';
+import { getSession, useLogin } from '@/model/session';
 const isActive = ref(false);
-const isShoppingCartOpen = ref(false);
+const session = getSession();
 
 </script>
 
@@ -37,7 +37,7 @@ const isShoppingCartOpen = ref(false);
 
           <div class="navbar-dropdown">
             <a class="navbar-item">
-              Users
+              <RouterLink class = "navbar-item" to = "/admin"> Users </RouterLink>
             </a>
             
           </div>
