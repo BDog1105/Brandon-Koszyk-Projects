@@ -1,0 +1,1 @@
+import {} from "@/data/products.json";
