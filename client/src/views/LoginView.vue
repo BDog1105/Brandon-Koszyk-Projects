@@ -3,7 +3,7 @@
 <template>
   <div class="hero-body">
     <div class="column is-half is-offset-one-quarter">
-      <div class="panel">
+      <div class="box">
         <div class="field">
           <p class="control has-icons-left has-icons-right">
             <input class="input" type="email" placeholder="Email" />

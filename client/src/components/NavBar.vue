@@ -2,8 +2,10 @@
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import LoginBadge from './LoginBadge.vue';
+import FlyoutPanel from './FlyoutPanel.vue';
 
 const isActive = ref(false);
+const isShoppingCartOpen = ref(false);
 
 </script>
 
@@ -24,35 +26,26 @@ const isActive = ref(false);
 
     <div id="navbarBasicExample" class="navbar-menu" :class="{ 'is-active': isActive }">
       <div class="navbar-start">
-        <RouterLink class="navbar-item" to="/" >Home</RouterLink>
-        <RouterLink class="navbar-item" to="/about">About</RouterLink>
-        <RouterLink class="navbar-item" to="/products">Products</RouterLink>
+        <RouterLink class="navbar-item" to="/activity" >My Activity</RouterLink>
+        <RouterLink class="navbar-item" to="/friends-activity">Friends Activity</RouterLink>
+        <RouterLink class="navbar-item" to="/products">People Search</RouterLink>
         
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
-            More
+            Admin
           </a>
 
           <div class="navbar-dropdown">
             <a class="navbar-item">
-              About
+              Users
             </a>
-            <a class="navbar-item">
-              Jobs
-            </a>
-            <a class="navbar-item">
-              Contact
-            </a>
-            <hr class="navbar-divider">
-            <a class="navbar-item">
-              Report an issue
-            </a>
+            
           </div>
         </div>
       </div>
 
       <div class="navbar-end">
-        <div class="navbar-item">
+        <div class="navbar-item has-dropdown">
           <LoginBadge />
         </div>
       </div>
