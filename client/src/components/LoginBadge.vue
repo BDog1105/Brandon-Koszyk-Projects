@@ -13,7 +13,7 @@
   }
 
   const doLogin2 = () => {
-    login('quadale@dingle', 'rehehehehe')
+    login('quandale@dingle', 'rehehehehe')
   }
 
   const doLogout = () => {
@@ -35,29 +35,26 @@
     </small>
   </div>
   <div class="buttons" v-else>
+    <div class ="navbar-item has-dropdown is-hoverable">
+    <a class="button is-light"> 
+      Log in
+    </a>
+      <div class="navbar-dropdown">
+          <a class="navbar-item" @click.prevent="doLogin"> Sheldon </a>
+          <a class="navbar-item" @click.prevent="doLogin1"> Shaq </a>
+          <a class="navbar-item" @click.prevent="doLogin2"> Quandale </a>
+          <hr class="navbar-divider" data="">
+         <a class="navbar-item" data = ""> Other Account </a>
+      </div>
+    </div>
+
     <a class="button is-primary">
       <strong>Sign up</strong>
     </a>
-    <div class="dropdown is-active" data-v-1f0da592="">
-                                        <div class="dropdown-trigger">
-                                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                                                <span data-v-1f0da592="">Log in</span>
-                                                <span class="icon is-small" data-v-1f0da592="">
-                                                    <i class="fas fa-angle-down" aria-hidden="true" data-v-1f0da592=""></i>
-                                                </span>
-                                            </button>
-                                        </div>
-                                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                            <div class="dropdown-content">
-                                                <a class="dropdown-item" data-v-1f0da592=""> Moshe </a>
-                                                <a class="dropdown-item" data-v-1f0da592=""> Kamala Harris </a>
-                                                <a class="dropdown-item" data-v-1f0da592=""> John Smith </a>
-                                                <hr class="dropdown-divider" data-v-1f0da592="">
-                                                <a href="/login" class="router-link-active router-link-exact-active dropdown-item is-disabled" data-v-1f0da592="" aria-current="page"> Other Account </a>
-                                            </div>
-                                        </div>
-                                    </div>
   </div>
+                                        
+                                    
+
 </template>
 
 
