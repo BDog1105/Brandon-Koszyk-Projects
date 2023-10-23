@@ -20,9 +20,10 @@ import NavBar from './components/NavBar.vue';
   }
 
   .container {
-    background-color: white;
+    background-color: #c1bcd4;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 5px;
     min-height: 100vh;
   }
+
 </style>

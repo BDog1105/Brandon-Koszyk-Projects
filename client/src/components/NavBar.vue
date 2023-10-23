@@ -12,7 +12,7 @@ const session = getSession();
 <template>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="/">
+      <a class="navbar-item">
         <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="28" height="28" />
 
       </a>
@@ -26,6 +26,7 @@ const session = getSession();
 
     <div id="navbarBasicExample" class="navbar-menu" :class="{ 'is-active': isActive }">
       <div class="navbar-start">
+        <RouterLink class="navbar-item" to="/" >Home</RouterLink>
         <RouterLink class="navbar-item" to="/activity" >My Activity</RouterLink>
         <RouterLink class="navbar-item" to="/friends-activity">Friends Activity</RouterLink>
         <RouterLink class="navbar-item" to="/people-search">People Search</RouterLink>

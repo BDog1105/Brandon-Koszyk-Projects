@@ -10,6 +10,7 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomeView,
+      beforeEnter: requireLogin,
     },
     { path: "/login", name: "login", component: LoginView },
     {
@@ -45,6 +46,8 @@ function requireLogin(to: RouteLocationNormalized, from: RouteLocationNormalized
   if(!session.user){
     session.redirectUrl = to.fullPath;
     next('/login');
+ // }else if(session.user.role){
+  //  next
   }else{
     next();
   }
