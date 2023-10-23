@@ -1,61 +1,92 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
-  const newTask = ref('');
-  const tasks = ref([] as { id?: number, text: string, completed: boolean }[] );
-
-  const tabList = ['Current', 'Completed', 'All'];
-  const tabState = ref('Current');
-
-  function addTask() {
-    tasks.value.push({ text: newTask.value, completed: false });
-    newTask.value = '';
-  };
-
-  const shouldDisplay = (task: { id?: number, text: string, completed: boolean }) =>
-    (tabState.value == 'Current' && !task.completed) ||
-    (tabState.value == 'Completed' && task.completed) ||
-    tabState.value == 'All';
-
+import { ref } from "vue"
+import { getSession, useLogin } from '@/model/session'
+const show1 = ref(true);
+const session = getSession();
 
 </script>
 
-<template>
+<template >
   <main class="columns is-multiline is-centered">
     <div class="column is-full">
-      <h1 class="title" >Home</h1>
-      <h2 class="subtitle">
-        Welcome to your Vue.js + TypeScript app
-      </h2>
+      <h1 class="title">Home</h1>
+
     </div>
 
-    <div class="column is-half-desktop is-centered">
-      <div class="panel is-primary">
-        <p class="panel-heading">
-          To Do
-        </p>
-        <div class="panel-block">
-          <p class="control has-icons-left">
-            <input  class="input" type="text" placeholder="What do you want to do"
-                    @keypress.enter="addTask" v-model="newTask" >
-            <span class="icon is-left">
-              <i class="fas fa-plus" aria-hidden="true"></i>
-            </span>
-          </p>
+    <div class="container">
+      <div class="columns">
+        <div class="column is-hidden-touch is-one-quarter">
+          
         </div>
-        <p class="panel-tabs">
-          <a v-for="tab in tabList" :class="{ 'is-active': tabState == tab}" @click.prevent="tabState = tab">{{ tab }}</a>
-        </p>
-        <label class="panel-block" v-for="task in tasks" v-show="shouldDisplay(task)">
-          <input type="checkbox" v-model="task.completed">
-          {{ task.text }}
-        </label>
-        <div class="panel-block">
-          <button class="button is-link is-outlined is-fullwidth">
-            Reset all filters
-          </button>
+      <div v-if="session.user" class="column">
+        <div class="box has-text-success summary">
+          <h2 class="title">Today</h2>
+          <div class="columns is-multiline">
+            <div class="column is-half">
+              <h3 class="value">{{ session.user.workout.distance }}</h3>
+              <caption class="caption">Distance</caption>
+            </div>
+            <div class="column is-half">
+              <h3 class="value">{{ session.user.workout.duration }}</h3>
+              <caption class="caption">Duration</caption>
+            </div>
+            <div class="column is-half">
+              <h3 class="value">{{ session.user.workout.pace }} mph</h3>
+              <caption class="caption">Avg Pace</caption>
+            </div>
+            <div class="column is-half">
+              <h3 class="value">{{ session.user.workout.calories }}</h3>
+              <caption class="caption">Calories</caption>
+            </div>
+          </div>
+        </div>
+        <div class="box has-text-success summary">
+          <h2 class="title">This week</h2>
+          <div class="columns is-multiline">
+            <div class="column is-half">
+              <h3 class="value">{{ session.user.workout.weekly.distance }}</h3>
+              <caption class="caption">Distance</caption>
+            </div>
+            <div class="column is-half">
+              <h3 class="value">{{ session.user.workout.weekly.duration }}</h3>
+              <caption class="caption">Duration</caption>
+            </div>
+            <div class="column is-half">
+              <h3 class="value">{{ session.user.workout.weekly.pace }} mph</h3>
+              <caption class="caption">Avg Pace</caption>
+            </div>
+            <div class="column is-half">
+              <h3 class="value">{{ session.user.workout.weekly.calories }}</h3>
+              <caption class="caption">Calories</caption>
+            </div>
+          </div>
+        </div>
+        <div class="box has-text-success summary">
+          <h2 class="title">All time</h2>
+          <div class="columns is-multiline">
+            <div class="column is-half">
+              <h3 class="value">{{ session.user.workout.alltime.distance }}</h3>
+              <caption class="caption">Distance</caption>
+            </div>
+            <div class="column is-half">
+              <h3 class="value">{{ session.user.workout.alltime.duration }}</h3>
+              <caption class="caption">Duration</caption>
+            </div>
+            <div class="column is-half">
+              <h3 class="value">{{ session.user.workout.alltime.pace }} mph</h3>
+              <caption class="caption">Avg Pace</caption>
+            </div>
+            <div class="column is-half">
+              <h3 class="value">{{ session.user.workout.alltime.calories }}</h3>
+              <caption class="caption">Calories</caption>
+            </div>
+          </div>
         </div>
       </div>
+      <div class="column is-one-quarter">
+        
+      </div>
     </div>
-  </main>
-</template>
+  </div>
+
+</main></template>

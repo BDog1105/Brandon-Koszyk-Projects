@@ -34,7 +34,7 @@ const isActive = ref(false);
               </figure>
               <div class="media-content">
               <div class="content">
-                <p><strong>{{ user[0].firstName }} {{ user[0].lastName }}</strong> &nbsp;<small>{{ user[0].username }}</small> &nbsp; <small>24 min ago</small><br>
+                <p><strong>{{ user[0].firstName }} {{ user[0].lastName }}</strong> &nbsp;<small>{{ user[0].username }}</small> &nbsp; <small>{{ user[0].time }}</small><br>
                   {{ user[0].workout.type }} - {
                   "lat": {{ user[0].workout.coordinates.lat }},
                   "lng": {{ user[0].workout.coordinates.lng }}
@@ -77,7 +77,7 @@ const isActive = ref(false);
               </figure>
               <div class="media-content">
               <div class="content">
-                <p><strong>{{ user[1].firstName }} {{ user[1].lastName }}</strong> &nbsp;<small>{{ user[1].username }}</small> &nbsp; <small>24 min ago</small><br>
+                <p><strong>{{ user[1].firstName }} {{ user[1].lastName }}</strong> &nbsp;<small>{{ user[1].username }}</small> &nbsp; <small>{{ user[1].time }}</small><br>
                   {{ user[1].workout.type }} - {
                   "lat": {{ user[1].workout.coordinates.lat }},
                   "lng": {{ user[1].workout.coordinates.lng }}
@@ -120,7 +120,7 @@ const isActive = ref(false);
               </figure>
               <div class="media-content">
               <div class="content">
-                <p><strong>{{ user[2].firstName }} {{ user[2].lastName }}</strong> &nbsp;<small>{{ user[2].username }}</small> &nbsp; <small>24 min ago</small><br>
+                <p><strong>{{ user[2].firstName }} {{ user[2].lastName }}</strong> &nbsp;<small>{{ user[2].username }}</small> &nbsp; <small>{{ user[2].time }}</small><br>
                   {{ user[2].workout.type }} - {
                   "lat": {{ user[2].workout.coordinates.lat }},
                   "lng": {{ user[2].workout.coordinates.lng }}
