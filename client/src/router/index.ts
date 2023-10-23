@@ -13,7 +13,7 @@ const router = createRouter({
     },
     { path: "/login", name: "login", component: LoginView },
     {
-      path: "/activiy",
+      path: "/activity",
       name: "activity",
       component: () => import("../views/ActivityView.vue"),
       beforeEnter: requireLogin,
@@ -28,7 +28,7 @@ const router = createRouter({
       path: "/admin",
       name: "admin",
       component: () => import("../views/AdminView.vue"),
-      beforeEnter: requireAdmin,
+      beforeEnter: requireAdmin, 
     },
     {
       path: "/people-search",

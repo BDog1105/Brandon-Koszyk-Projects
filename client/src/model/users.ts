@@ -10,11 +10,19 @@ export interface User {
   email: string,
   password: string,
   role: "admin" | "user",
-  token?: string
+  token?: string,
+  image: string,
+  username: string,
+  workout: any,
+  coordinate?: number,
+  distance?: string,
+  duration?: string,
+  picture?: string,
+  time: string
 }
 
 export function getUsers(): User[] {
-  return data.users.map( x => ({ ...x, role: x.id <= 5 ? 'admin' : 'user' }) ) 
+  return data.users.map( x => ({ ...x, role: x.id <= 1 ? 'admin' : 'user' }) ) 
 }
 
 export function getUserByEmail(email: string): User | undefined {
