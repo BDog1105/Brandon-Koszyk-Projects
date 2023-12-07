@@ -1,0 +1,25 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "email": "jonb1@newpaltz.edu",
+            "password": "pass1",
+            "name": "Benjamin Jon",
+            "photo": "https://i.pinimg.com/1200x/47/77/ae/4777ae0906dd0113ad0bb00d61125d1b.jpg"
+        },
+        {
+            "id": 5,
+            "email": "wheed1@newpaltz.edu",
+            "password": "pass2",
+            "name": "Darrell Wheeler",
+            "photo": "https://www.newpaltz.edu/media/give/members/Darrell%20Wheeler%20200.jpg"
+        },
+        {
+            "id": 1,
+            "email": "user3@newpaltz.edu",
+            "password": "pass3",
+            "name": "Some Person",
+            "photo": "https://theintercept-static.imgix.net/usq/63c570dd-ebe2-4909-a620-3cb53f40e7ca/e5029205-7e01-40d6-81e8-dd8af814d98d.jpeg"
+        }
+    ]
+}
