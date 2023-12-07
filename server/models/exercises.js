@@ -16,8 +16,8 @@ function addExercise(exercise) {
 
 
 function updateExercise(exercises) {
-    const index = data.workouts.findIndex(s => s.id === exercise.id);
-    data.workouts[index] = workout;
+    const index = data.exercises.findIndex(s => s.id === exercise.id);
+    data.exercises[index] = exercise;
 }
 
 
