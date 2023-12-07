@@ -1,0 +1,25 @@
+{
+    "exercises": [
+    {
+        "name": "Benjamin Jon",
+        "distance": 1.1,
+        "duration": "7:30",
+        "pace": 10,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis."
+    },
+    {
+        "name": "Some Person",
+        "distance": 1.1,
+        "duration": "8:12",
+        "pace": 11,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis."
+    },
+    {
+        "name": "Darrell Wheeler",
+        "distance": 1.1,
+        "duration": "6:53",
+        "pace": 9,
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis."
+    }
+    ]
+}
