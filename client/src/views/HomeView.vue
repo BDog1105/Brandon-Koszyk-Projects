@@ -1,92 +1,52 @@
 <script setup lang="ts">
-import { ref } from "vue"
-import { getSession, useLogin } from '@/model/session'
-const show1 = ref(true);
-const session = getSession();
-
+    
 </script>
 
-<template >
-  <main class="columns is-multiline is-centered">
-    <div class="column is-full">
-      <h1 class="title">Home</h1>
-
-    </div>
-
-    <div class="container">
-      <div class="columns">
-        <div class="column is-hidden-touch is-one-quarter">
+<template>
+    <section class="hero is-link is-medium">
+        
+        <div class="hero-head">
           
         </div>
-      <div v-if="session.user" class="column">
-        <div class="box has-text-success summary">
-          <h2 class="title">Today</h2>
-          <div class="columns is-multiline">
-            <div class="column is-half">
-              <h3 class="value">{{ session.user.workout.distance }}</h3>
-              <caption class="caption">Distance</caption>
+
+        <div class="hero-body" id="hero">
+            <div class="columns margin-big is-vcentered">
+                <div class="column ">
+                    <h1 class="title is-1 is-spaced"><b>eLogger:</b> The <b>best</b> way to track <b>all</b> of your <b>habits</b></h1>
+                    <div class="subtitle is-3">All in one place.</div>
+                    <a href="http://www.freepik.com">Image designed by pch.vector / Freepik</a>
+                    <!--<div class="subtitle is-3 is-spaced"></div>-->
+                </div>
+                <div class="column">
+                    <img src='../assets/couple-mountains.png' >
+                </div>
             </div>
-            <div class="column is-half">
-              <h3 class="value">{{ session.user.workout.duration }}</h3>
-              <caption class="caption">Duration</caption>
-            </div>
-            <div class="column is-half">
-              <h3 class="value">{{ session.user.workout.pace }} mph</h3>
-              <caption class="caption">Avg Pace</caption>
-            </div>
-            <div class="column is-half">
-              <h3 class="value">{{ session.user.workout.calories }}</h3>
-              <caption class="caption">Calories</caption>
-            </div>
-          </div>
         </div>
-        <div class="box has-text-success summary">
-          <h2 class="title">This week</h2>
-          <div class="columns is-multiline">
-            <div class="column is-half">
-              <h3 class="value">{{ session.user.workout.weekly.distance }}</h3>
-              <caption class="caption">Distance</caption>
-            </div>
-            <div class="column is-half">
-              <h3 class="value">{{ session.user.workout.weekly.duration }}</h3>
-              <caption class="caption">Duration</caption>
-            </div>
-            <div class="column is-half">
-              <h3 class="value">{{ session.user.workout.weekly.pace }} mph</h3>
-              <caption class="caption">Avg Pace</caption>
-            </div>
-            <div class="column is-half">
-              <h3 class="value">{{ session.user.workout.weekly.calories }}</h3>
-              <caption class="caption">Calories</caption>
-            </div>
-          </div>
-        </div>
-        <div class="box has-text-success summary">
-          <h2 class="title">All time</h2>
-          <div class="columns is-multiline">
-            <div class="column is-half">
-              <h3 class="value">{{ session.user.workout.alltime.distance }}</h3>
-              <caption class="caption">Distance</caption>
-            </div>
-            <div class="column is-half">
-              <h3 class="value">{{ session.user.workout.alltime.duration }}</h3>
-              <caption class="caption">Duration</caption>
-            </div>
-            <div class="column is-half">
-              <h3 class="value">{{ session.user.workout.alltime.pace }} mph</h3>
-              <caption class="caption">Avg Pace</caption>
-            </div>
-            <div class="column is-half">
-              <h3 class="value">{{ session.user.workout.alltime.calories }}</h3>
-              <caption class="caption">Calories</caption>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="column is-one-quarter">
         
+        <div class="hero-foot">
+        </div>
+
+    </section>
+
+    <div class="section">
+      <div class="title">
+        <h1>Welcome to our Homepage!</h1>
       </div>
     </div>
-  </div>
+</template>
 
-</main></template>
+
+<style scoped>
+.margin-big {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+#hero {
+    padding-top: 20px;
+    padding-bottom: 45px;
+    background-position-x: center;
+    background-size: cover;
+}
+
+</style>

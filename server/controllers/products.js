@@ -1,5 +1,6 @@
 const express = require('express');
-const model = require('../models/exercises');
+const model = require('../models/products');
+const { requireLogin } = require('../middleware/authorization');
 const router = express.Router();
 
 router
@@ -38,7 +39,7 @@ router
             }).catch(next);
     })
     
-    .post('/', (req, res, next) => { //addItem()
+    .post('/', requireLogin(true), (req, res, next) => { //addItem()
         model.addItem(req.body)
             .then(item => {
                 const data = {
@@ -49,7 +50,7 @@ router
             }).catch(next);
     })
 
-    .patch('/:id', (req, res, next) => { //updateItem()
+    .patch('/:id', requireLogin(true), (req, res, next) => { //updateItem()
         model.updateItem(req.body)
             .then(item => {
                 const data = {
@@ -61,7 +62,7 @@ router
         
     })
 
-    .delete('/:id', (req, res, next) => { //deleteItem()
+    .delete('/:id', requireLogin(true), (req, res, next) => { //deleteItem()
         model.deleteItem(req.params.id) 
             .then(item => {
                 const data = {

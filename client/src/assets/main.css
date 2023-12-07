@@ -1,8 +1,39 @@
-@import url('bulma/css/bulma.css');
-@import url('@fortawesome/fontawesome-free/css/all.css');
+@import 'bulma/css/bulma.css';
+@import '@fortawesome/fontawesome-free/css/all.css';
 
+$hero-body-padding-medium: 7rem 4rem;
 
-/*
-@import url('bulma/css/bulma.css');
-@import url('C:\Users\hoodi\OneDrive\Desktop\Web Programming\Brandon-Koszyk\client\node_modules\@fortawesome\fontawesome-free\css\all.css');
-*/
+#add-workout {
+    position: fixed;
+    height: 100px;
+    width: 100px;
+    bottom: 60px;
+    right: 60px;
+    border-radius: 50%;
+}
+
+#add-workout:hover {
+    transform: scale(1.05);
+}
+
+.product-img {
+    border-radius: 12px;
+}
+
+.table-photo {
+    height: 100px;
+}
+
+#add-btn {
+    position: fixed;
+    height: 100px;
+    width: 100px;
+    bottom: 60px;
+    right: 60px;
+    border-radius: 50%;
+    z-index: 999;
+}
+
+#add-btn:hover {
+    transform: scale(1.05);
+}
