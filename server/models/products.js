@@ -1,9 +1,9 @@
-const data = require('../data/exercises.json');
+const data = require('../data/products_sports.json');
 const { connect, ObjectId } = require('./mongo');
 
-const COLLECTION_NAME = 'exercises';
+const COLLECTION_NAME = 'products';
 
-const collection = async () => { //returns the exercises collection
+const collection = async () => { //returns the products collection
     const database = await connect();
     return database.collection(COLLECTION_NAME);
 }
@@ -68,7 +68,7 @@ const search = async (searchTerm, page = 1, pageSize = 30) => {
 
 async function seed() {
     const coll = await collection();
-    const result = await coll.insertMany(data.exercises);
+    const result = await coll.insertMany(data.products);
     return result.insertedCount;
 }
 

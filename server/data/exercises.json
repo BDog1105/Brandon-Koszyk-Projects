@@ -1,0 +1,103 @@
+{
+    "exercises": [
+      {
+        "name": "John Doe",
+        "workout": "Push-ups",
+        "description": "Place your hands on the ground, shoulder-width apart. Lower your body by bending your elbows while keeping your back straight. Push back up to the starting position.",
+        "sets": 3,
+        "reps": 12,
+        "duration": "00:30",
+        "category": "weight"
+      },
+      {
+        "name": "Jane Smith",
+        "workout": "Jumping Jacks",
+        "description": "Stand with feet together and arms at your sides. Jump while moving your legs apart and raising your arms above your head. Jump back to the starting position.",
+        "sets": 4,
+        "reps": 20,
+        "duration": "01:00",
+        "category": "cardio"
+      },
+      {
+        "name": "Alice Johnson",
+        "workout": "Plank",
+        "description": "Get into a push-up position with your forearms on the ground. Keep your body in a straight line from head to toe. Hold the position for the specified duration.",
+        "sets": 3,
+        "reps": 1,
+        "duration": "01:00",
+        "category": "weight"
+      },
+      {
+        "name": "Bob Brown",
+        "workout": "Lunges",
+        "description": "Stand with feet hip-width apart. Step forward with one foot and lower your body until your front thigh is parallel to the ground. Push back up and return to the starting position. Repeat with the other leg.",
+        "sets": 3,
+        "reps": 10,
+        "duration": "00:45",
+        "category": "weight"
+      },
+      {
+        "name": "Charlie Miller",
+        "workout": "Bicycle Crunches",
+        "description": "Lie on your back with your hands behind your head. Bring your knees towards your chest and lift your shoulder blades off the ground. Touch your right elbow to your left knee, then your left elbow to your right knee, alternating in a bicycle motion.",
+        "sets": 3,
+        "reps": 15,
+        "duration": "01:00",
+        "category": "cardio"
+      },
+      {
+        "name": "Diana Ross",
+        "workout": "Squats",
+        "description": "Stand with feet shoulder-width apart. Lower your body by bending your knees and pushing your hips back. Keep your chest up and back straight. Push back up to the starting position.",
+        "sets": 4,
+        "reps": 12,
+        "duration": "01:00",
+        "category": "weight"
+      },
+      {
+        "name": "Eva Green",
+        "workout": "Mountain Climbers",
+        "description": "Start in a plank position. Bring one knee towards your chest, then quickly switch legs, bringing the other knee towards your chest. Keep your back straight and core engaged.",
+        "sets": 4,
+        "reps": 15,
+        "duration": "01:00",
+        "category": "cardio"
+      },
+      {
+        "name": "Frank Sinatra",
+        "workout": "Deadlifts",
+        "description": "Stand with feet hip-width apart, holding a barbell or dumbbells in front of your thighs. Bend your knees and hinge at your hips to lower the weight towards the ground. Keep your back straight and core engaged. Return to the starting position.",
+        "sets": 4,
+        "reps": 10,
+        "duration": "01:00",
+        "category": "weight"
+      },
+      {
+        "name": "Grace Kelly",
+        "workout": "Burpees",
+        "description": "Start standing, then squat down and place your hands on the ground. Kick your feet back to a plank position. Perform a push-up, then jump your feet back to your hands and stand up, jumping into the air.",
+        "sets": 3,
+        "reps": 10,
+        "duration": "01:00",
+        "category": "cardio"
+      },
+      {
+        "name": "Hank Williams",
+        "workout": "Bench Press",
+        "description": "Lie on a bench with your feet flat on the ground. Hold a barbell or dumbbells above your chest with your arms extended. Lower the weight to your chest, then push it back up to the starting position.",
+        "sets": 4,
+        "reps": 10,
+        "duration": "01:00",
+        "category": "weight"
+      },
+      {
+        "name": "Ingrid Bergman",
+        "workout": "High Knees",
+        "description": "Stand with your feet hip-width apart. Quickly raise one knee to your chest, then switch legs, raising the other knee to your chest. Continue alternating legs, pumping your arms as you go.",
+        "sets": 4,
+        "reps": 20,
+        "duration": "01:00",
+        "category": "cardio"
+      }
+    ]
+  }

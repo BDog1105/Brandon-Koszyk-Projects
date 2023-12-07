@@ -1,116 +1,95 @@
-const data = require('../data/users.json');
-const jwt = require('jsonwebtoken');
-const { connect, ObjectId } = require('./mongo');
+const express = require('express');
+const model = require('../models/users');
+const { requireLogin } = require('../middleware/authorization');
+const router = express.Router();
 
-const COLLECTION_NAME = 'users';
+router
+    .get('/', requireLogin(true), (req, res, next) => {
+        model.getAll(+req.query.page, +req.query.pageSize) //getAll
+            .then(list => {
+                const data = {
+                    data: list.items,
+                    total: list.total,
+                    isSuccess: true
+                }
+                res.send(data);
+            }).catch(next);
+    })
 
-const collection = async () => { //returns the users collection
-    const database = await connect();
-    return database.collection(COLLECTION_NAME);
-}
+    .get('/search/:q', requireLogin(), (req, res, next) => { //search
+        model.search(req.params.q, +req.query.page, +req.query.pageSize)
+            .then(list => {
+                const data = {
+                    data: list.items,
+                    total: list.total,
+                    isSuccess: true
+                }
+                res.send(data);
+            }).catch(next);        
+    })
 
-const getAll = async (page=1, pageSize=30) => {
-    const coll = await collection();
-    const items = await coll
-        .find()
-        .skip((page-1) * pageSize)
-        .limit(pageSize)
-        .toArray();
-    const total = await coll.countDocuments();
-    return { items, total };
-}
+    .get('/:id', requireLogin(), (req, res, next) => { //getItemById()
+        model.getItemById(req.params.id)
+            .then(x => {
+                const data = {
+                    data: x,
+                    isSuccess: true
+                };
+                res.send(data);
+            }).catch(next);
+    })
+    
+    .post('/', (req, res, next) => { //addItem()
+        model.addItem(req.body)
+            .then(item => {
+                const data = {
+                    data: item,
+                    isSuccess: true
+                }
+                res.send(data);
+            }).catch(next);
+    })
 
-const getItemById = async (id) => {
-    const coll = await collection();
-    const item = await coll
-        .findOne({_id: new ObjectId(id)});
-    return item;
-}  
+    .patch('/:id', requireLogin(true), (req, res, next) => { //updateItem()
+        model.updateItem(req.body)
+            .then(item => {
+                const data = {
+                    data: item,
+                    isSuccess: true
+                }
+                res.send(data);
+            }).catch(next);
+        
+    })
 
-const addItem = async (item) => {
-    const coll = await collection();
-    const result = await coll.insertOne(item)
-    item._id = result.insertedId;
-    return item;
-}
+    .delete('/:id', requireLogin(true), (req, res, next) => { //deleteItem()
+        model.deleteItem(req.params.id) 
+            .then(item => {
+                const data = {
+                    data: item,
+                    isSuccess: true
+                }
+                res.send(data);
+            }).catch(next);
+    })
 
-const updateItem = async (item) => {
-    const coll = await collection();
-    const { _id, ...updatedFields } = item;
+    .post('/login', (req, res, next) => {
+        model.login(req.body.email, req.body.password)
+            .then(x => {
+                const data = { data: x, isSuccess: true };
+                res.send(data)
+            }).catch(next);
+    })
 
-    const result = await coll.findOneAndUpdate(
-        { _id: new ObjectId(_id) },
-        { $set: updatedFields },
-        { returnDocument: 'after' }
-    );
+    .post('/seed', requireLogin(true), (req, res, next) => {
+        model.seed()
+            .then(count => {
+                const data = {
+                    data: count,
+                    isSuccess: true
+                }
+                res.send(data);
+            }).catch(next);
+    })
 
-    return result;
-}
-
-const deleteItem = async (id) => {
-    const coll = await collection();
-    const result = await coll.deleteOne({ _id: new ObjectId(id) });
-    return result.deletedCount;
-}
-
-const search = async (searchTerm, page = 1, pageSize = 30) => {
-    const coll = await collection();
-    const query = {
-        $or: [
-            { name: { $regex: searchTerm, $options: 'i' } }
-        ]
-    };
-    const items = await coll.find(query).skip((page - 1) * pageSize).limit(pageSize).toArray();
-    const total = await coll.countDocuments(query);
-    return { items, total };
-}
-
-const login = async (email, password) => {
-    const coll = await collection();
-    const user = await coll.findOne({ email });
-    if (!user) {
-        throw new Error('User not found');
-    }
-    if (user.password !== password) {
-        throw new Error('Invalid password');
-    }
-
-    const cleanUser = { ...user, password: undefined };
-    const token = await generateTokenAsync(cleanUser, process.env.JWT_SECRET, '1d');
-
-    return { user: cleanUser, token };
-}
-
-const generateTokenAsync = (user, secret, expiresIn) => {
-    return new Promise( (resolve, reject) => {
-        jwt.sign(user, secret, { expiresIn }, (err, token) => {
-            if (err) {
-                reject(err); //triggers .catch
-            } else {
-                resolve(token); //triggers .then
-            }
-        });
-    });
-}
-
-function verifyTokenAsync(token) {
-    return new Promise( (resolve, reject) => {
-        jwt.verify(token, process.env.JWT_SECRET ?? "", (err, user) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(user);
-            }
-        });
-    });
-}
-
-const seed = async () => {
-    const coll = await collection();
-    const result = await coll.insertMany(data.users);
-    return result.insertedCount;
-}
-
-module.exports = {
-    getAll, search, getItemById, addItem, updateItem, deleteItem, seed, login, generateTokenAsync, verifyTokenAsync
-};
+module.exports = router;
