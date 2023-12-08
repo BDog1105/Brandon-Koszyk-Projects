@@ -1,45 +1,111 @@
 <script setup lang="ts">
-import { ref } from "vue"
-const isActive = ref(true);
+    import Modal from '../components/Modal.vue';
+    import { ref } from 'vue';
+    import { useSession } from '@/model/session';
+    import { addExercise, type Exercise } from '../model/exercises';
+
+    const props = defineProps<{
+        isOpen: boolean
+    }>()
+
+    const emit = defineEmits<{
+        (e:'update'): void;
+    }>();
+
+    const session = useSession();
+    const exercise = ref<Exercise>({} as Exercise);
+    const tag = ref('' as string);
+
+    const addWorkout = () => {
+        exercise.value.name = session.user?.name;
+        addExercise(exercise.value)
+            .then(data => {
+                console.log(data);
+            });
+
+        exercise.value.category = '';
+        exercise.value.workout = '';
+        exercise.value.description = '';
+        exercise.value.sets = '';
+        exercise.value.reps = '';
+        exercise.value.duration = '';
+
+        emit('update');
+    }
+    
 </script>
 
 <template>
-    <div v-if="isActive" class="modal is-active">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">Add a Workout</p><button @click="isActive = !isActive" class="delete" aria-label="close"></button>
-            </header>
-            <section class="modal-card-body">
-                <div class="field" data=""><label class="label" for="name" data="">Title</label>
-                        <input type="text" class="input" id="name" data=""></div>
+    <Modal :title="'Add a Workout'" :is-open="props.isOpen" @update="() => emit('update')">
+        <template #default>
+            <div class="form">
 
-                <div class="field" data=""><label class="label" for="date" data="">Date</label>
-                        <input type="date" class="input" id="date" data=""></div>
+                <div class="column">
+                    <Autocomplete/>
+                </div>
 
-                <div class="field" data=""><label class="label" for="duration" data="">Duration</label>
-                        <input type="text" class="input" id="duration" data=""></div>
+                <div class="column">
+                    <label class="label">Select a Category:</label>
+                    <div class="control has-icons-left">
+                        <div class="select">
+                            <select required v-model="exercise.category" placeholder="Choose one">
+                                <option value="" selected disabled>Choose one</option>
+                                <option>cardio</option>
+                                <option>weight</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="field" data=""><label class="label" for="location" data="">Location</label>
-                        <input type="text" class="input" id="location" data=""></div>
+                <div class="column">
+                    <label for="" class="label">Workout</label>
+                    <div class="control has-icons-left">
+                        <input type="workout" placeholder="Workout" class="input" required v-model="exercise.workout">
+                    </div>
+                </div>
 
-            <div class="field" data=""><label class="label" for="location" data="">Picture</label>
-                        <input type="text" class="input" id="location" data=""></div>
+                <div class="column">
+                    <label for="" class="label">Description</label>
+                    <div class="control has-icons-left">
+                        <textarea 
+                            class="textarea"
+                            placeholder="Description" 
+                            v-model="exercise.description"
+                            required>
+                        </textarea>
+                    </div>
+                </div>
 
-            <div class="field" data=""><label class="label" for="type" data="">Type</label>
-                <div class="select is-full-width" data="">
-                        <select class="form-control" id="type" data="">
-                        <option value="run" data="">Run</option>
-                        <option value="bike" data="">Bike</option>
-                        <option value="swim" data="">Walk</option>
-                        <option value="cardio" data="">Cardio</option>
-                        <option value="strength" data="">Strength</option>
-                    </select>
+                <div class="column">
+                    <label for="" class="label">Sets</label>
+                    <div class="control has-icons-left">
+                        <input type="sets" placeholder="Sets" class="input" required v-model="exercise.sets">
+                    </div>
+                </div>
+
+
+                <div class="column">
+                    <label for="" class="label">Reps</label>
+                    <div class="control has-icons-left">
+                        <input type="reps" placeholder="Reps" class="input" required v-model="exercise.reps">
+                    </div>
+                </div>
+
+
+                <div class="column">
+                    <label for="" class="label">Duration (per rep)</label>
+                    <div class="control has-icons-left">
+                        <input type="duration" placeholder="mm:ss" class="input" required v-model="exercise.duration">
+                    </div>
                 </div>
             </div>
-        </section>
-        <footer class="modal-card-foot"><button class="button is-success">Save changes</button>
-                <button @click="isActive = !isActive" class="button">Cancel</button></footer>
-    </div>
-</div>
+        </template>
+        <template #footer>
+            <button class="button is-link is-fullwidth" @click="() => addWorkout()">Add Workout</button>
+        </template>
+    </Modal>
 </template>
+
+<style scoped>
+    /* add-btn is in main.css */
+</style>
