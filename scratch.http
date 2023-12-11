@@ -1,0 +1,77 @@
+###
+
+Content-Type: application/json
+
+
+
+###
+http://localhost:3000
+
+
+/////////////////////////
+// Workouts
+
+###
+http://localhost:3000/api/v1/workouts
+
+###
+POST http://localhost:3000/api/v1/workouts/seed
+
+###
+POST http://localhost:3000/api/v1/workouts
+
+Content-Type: application/json
+
+{
+  "workout": {
+    "name": "Chest Day",
+    "description": "Chest day is the best day",
+    "userId": 1
+  },
+  "userId": 1
+}
+
+/////////////////////////
+// Users
+
+###
+POST http://localhost:3000/api/v1/users/seed
+
+###
+POST http://localhost:3000/api/v1/users
+Content-Type: application/json
+
+{
+  "firstName": "Josh",
+  "lastName": "Chaffy",
+  "email": "joshchaffy@gmail.com",
+  "password": "joshchaffy"
+}
+
+###
+PATCH http://localhost:3000/api/v1/users/4
+Content-Type: application/json
+
+{
+  "firstName": "Josh Chaffy"
+}
+
+###
+POST http://localhost:3000/api/v1/users/register
+Content-Type: application/json
+
+{
+  "firstName": "Josh",
+  "lastName": "Chaffy",
+  "email": "joshchaffy@gmail.com",
+  "password": "joshchaffy"
+}
+
+###
+POST http://localhost:3000/api/v1/users/login
+Content-Type: application/json
+
+{
+  "email": "joshchaffy@gmail.com",
+  "password": "joshchaffy"
+}
