@@ -1,111 +1,105 @@
 <script setup lang="ts">
-    import Modal from '../components/Modal.vue';
-    import { ref } from 'vue';
-    import { useSession } from '@/model/session';
-    import { addExercise, type Exercise } from '../model/exercises';
+import { ref } from "vue"
+import { useToast } from "vue-toastification";
 
-    const props = defineProps<{
-        isOpen: boolean
-    }>()
+const toast = useToast();
+const emit = defineEmits(["workoutAdded"]);
 
-    const emit = defineEmits<{
-        (e:'update'): void;
-    }>();
+const title = ref("");
+const date = ref("");
+const duration = ref("");
+const location = ref("");
+const picture = ref("");
+const type = ref("");
 
-    const session = useSession();
-    const exercise = ref<Exercise>({} as Exercise);
-    const tag = ref('' as string);
-
-    const addWorkout = () => {
-        exercise.value.name = session.user?.name;
-        addExercise(exercise.value)
-            .then(data => {
-                console.log(data);
-            });
-
-        exercise.value.category = '';
-        exercise.value.workout = '';
-        exercise.value.description = '';
-        exercise.value.sets = '';
-        exercise.value.reps = '';
-        exercise.value.duration = '';
-
-        emit('update');
+const onSubmit = () => {
+    if(!title.value || !date.value || !duration.value || !location.value || !picture.value || !type.value) {
+        toast.error("All data fileds must be filled out");
+        return;
     }
-    
+
+     const workoutData ={
+        title: title.value,
+        date: date.value,
+        duration: duration.value,
+        location: location.value,
+        picture: picture.value,
+        type: type.value
+    }
+
+    emit('workoutAdded', workoutData);
+
+    title.value = "";
+    date.value = "";
+    duration.value = "";
+    location.value = "";
+    picture.value = "";
+    type.value = "";
+
+}
+
+
+
 </script>
 
+
 <template>
-    <Modal :title="'Add a Workout'" :is-open="props.isOpen" @update="() => emit('update')">
-        <template #default>
-            <div class="form">
 
-                <div class="column">
-                    <Autocomplete/>
-                </div>
+        
+        <div class="modal-card">
 
-                <div class="column">
-                    <label class="label">Select a Category:</label>
-                    <div class="control has-icons-left">
-                        <div class="select">
-                            <select required v-model="exercise.category" placeholder="Choose one">
-                                <option value="" selected disabled>Choose one</option>
-                                <option>cardio</option>
-                                <option>weight</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+            <header class="modal-card-head">
+                <p class="modal-card-title">Add a Workout</p>
+            </header>
 
-                <div class="column">
-                    <label for="" class="label">Workout</label>
-                    <div class="control has-icons-left">
-                        <input type="workout" placeholder="Workout" class="input" required v-model="exercise.workout">
-                    </div>
-                </div>
+            <form id="form" @submit.prevent="onSubmit"> 
+            <section class="modal-card-body">
 
-                <div class="column">
-                    <label for="" class="label">Description</label>
-                    <div class="control has-icons-left">
-                        <textarea 
-                            class="textarea"
-                            placeholder="Description" 
-                            v-model="exercise.description"
-                            required>
-                        </textarea>
-                    </div>
-                </div>
+                <div class="field"><label class="label" for="Title" >Title</label>
+                        <input type="text" class="input" id="title" v-model="title" ></div>
 
-                <div class="column">
-                    <label for="" class="label">Sets</label>
-                    <div class="control has-icons-left">
-                        <input type="sets" placeholder="Sets" class="input" required v-model="exercise.sets">
-                    </div>
-                </div>
+                <div class="field"><label class="label" for="Date">Date</label>
+                        <input type="date" class="input" id="date" v-model="date"></div>
 
+                <div class="field"><label class="label" for="Duration">Duration</label>
+                        <input type="text" class="input" id="duration" v-model="duration"></div>
 
-                <div class="column">
-                    <label for="" class="label">Reps</label>
-                    <div class="control has-icons-left">
-                        <input type="reps" placeholder="Reps" class="input" required v-model="exercise.reps">
-                    </div>
-                </div>
+                <div class="field"><label class="label" for="Location">Location</label>
+                        <input type="text" class="input" id="location" v-model="location"></div>
 
+                <div class="field"><label class="label" for="Picture" >Picture</label>
+                        <input type="text" class="input" id="location" v-model="picture"></div>
 
-                <div class="column">
-                    <label for="" class="label">Duration (per rep)</label>
-                    <div class="control has-icons-left">
-                        <input type="duration" placeholder="mm:ss" class="input" required v-model="exercise.duration">
-                    </div>
+            <div class="field"><label class="label" for="Type" >Type</label>
+                <div class="select is-full-width" data="">
+                        <select class="form-control" id="type" v-model="type">
+                        <option value="run" data="">Run</option>
+                        <option value="bike" data="">Bike</option>
+                        <option value="swim" data="">Walk</option>
+                        <option value="cardio" data="">Cardio</option>
+                        <option value="strength" data="">Strength</option>
+                    </select>
                 </div>
             </div>
-        </template>
-        <template #footer>
-            <button class="button is-link is-fullwidth" @click="() => addWorkout()">Add Workout</button>
-        </template>
-    </Modal>
+
+        </section>
+       
+
+        <footer class="modal-card-foot">
+                <button class="button is-success">Save changes</button>
+            </footer>
+
+        </form>
+
+    </div>
 </template>
 
+
 <style scoped>
-    /* add-btn is in main.css */
+
+.modal-card {
+    margin: 10px;
+    overflow:scroll !important;
+}
+
 </style>

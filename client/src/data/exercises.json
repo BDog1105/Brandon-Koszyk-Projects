@@ -1,0 +1,38 @@
+{
+    "workouts":  [
+        {"id": 1, 
+         "firstName": "Shaq",
+         "lastName": "Attack",
+         "userName": "djdeisel",
+         "image": "https://i.kym-cdn.com/photos/images/original/001/474/527/b15.png",
+         "title": "Pick up basketball",
+         "date": "10 years ago",
+         "distance": "5.05 mi",
+         "duration": "23:55:19",
+         "location": "Los Angeles, CA",
+         "picture": "https://images2.minutemediacdn.com/image/fetch/w_850,h_560,c_fill,g_auto,f_auto/https%3A%2F%2Fhoopshabit.com%2Ffiles%2F2016%2F11%2F9222763-shaquille-o--850x560.jpg"
+        },
+        {"id": 2, 
+         "firstName": "Sheldon",
+         "lastName": "Quigley",
+         "userName": "hbingley1",
+         "image": "https://robohash.org/doloremquesintcorrupti.png",
+         "title": "Parkour Training",
+         "date": "2 days ago",
+         "distance": "0.50 mi",
+         "duration": "30:20",
+         "location": "New Paltz, NY",
+         "picture": "https://images.ctfassets.net/uwf0n1j71a7j/5GhVEraYQrWD6pA5JPIoYF/30e9b4a2ef2d10f43753aab65f31f7ff/parkour.jpg"
+        },
+        {"id": 3, 
+         "firstName": "Quandale",
+         "lastName": "Dingle",
+         "userName": "qdinglepringle",
+         "image": "https://static.wikia.nocookie.net/rfti/images/c/cf/Quandale.png",
+         "title": "Boxing",
+         "date": "16 minutes ago",
+         "distance": "1.52 mi",
+         "duration": "10:30",
+         "location": "Boulder, CO",
+         "picture": "https://images.ladbible.com/resize?type=webp&quality=70&width=648&fit=contain&gravity=null&url=https://images.ladbiblegroup.com/v3/assets/bltcd74acc1d0a99f3a/blt17903161e5a87d64/652c766bef32998255af42ff/GettyImages-1736781529.jpg"
+         }]}

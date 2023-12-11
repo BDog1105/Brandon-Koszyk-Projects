@@ -30,7 +30,7 @@ export function api(url: string, method: string, data?: any, headers?: any ) {
         })
 }
 
-export function useSession() {
+export function getSession() {
     return session;
 }
 
