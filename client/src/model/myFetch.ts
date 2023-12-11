@@ -1,25 +1,23 @@
-const API_URL = import.meta.env.VITE_API_URL;
-import { useSession } from './session';
 
-export type DataEnvelope<T> = {
-    data: T,
-    isSuccess: boolean,
-    error?: string
-}
+const API_ROOT = import.meta.env.VITE_API_ROOT as string;
 
-export type DataListEnvelope<T> = DataEnvelope<T[]> & { 
-    total: number
-}
-
-export async function rest(url: string, method: string, data?: any, headers?: any ){
-    
-    const response = await fetch(API_URL + url, {
-        method: method,
+export function rest(url: string, body?: unknown, method?: string, headers?: HeadersInit){
+    return fetch(url, {
+        method: method ?? (body ? "POST" : "GET"),
         headers: {
             'Content-Type': 'application/json',
-            ...headers,
+            ...headers
         },
-        body: data ? JSON.stringify(data) : undefined
-    });
-    return await (response.ok ? response.json() : response.json().then(x => { throw ({ ...x, message: x.error }); }));
+        body: body ? JSON.stringify(body) : undefined
+    })
+        .then(response => response.ok 
+            ? response.json()
+            : response.json().then(err => Promise.reject(err))
+        )
+
 }
+
+export function api(action: string, body?: unknown, method?: string, headers?: HeadersInit){
+    return rest(`${API_ROOT}/${action}`, body, method, headers);
+}
+

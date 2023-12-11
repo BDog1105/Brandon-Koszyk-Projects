@@ -1,82 +1,62 @@
-import { reactive } from "vue";
-import * as fetcher from './myFetch';
 
-export interface User {
-    _id: string;
-    name?: string;
-    email?: string;
-    password?: string;
-    photo?: string;
-    token?: string;
-    role?: string;
-}
+import { reactive } from "vue";
+import { useRouter } from "vue-router"
+import { useToast } from "vue-toastification";
+import * as myFetch from "./myFetch";
+import { type User } from "./users";
+
+const toast = useToast();
 
 const session = reactive({
-    user: null as User | null
-});
+  user: null as User | null,
+  token: null as string | null,
+  redirectUrl: null as string | null,
+  messages: [] as {
+    type: string,
+    text: string
+  }[],
+  loading: 0
+})
 
-export function api(url: string, method: string, data?: any, headers?: any ) {
+export function api(action: string, body?: unknown, method?: string, headers?: any){
+  session.loading++;
 
-    if(session.user?.token){
-        headers = {
-            "Authorization": `Bearer ${session.user.token}`,
-            ...headers,
-        }
+  if(session.token){
+    headers = headers ?? {};
+    headers['Authorization'] = `Bearer ${session.token}`;
+  }
+
+  return myFetch.api(`${action}`, body, method, headers)
+    .catch(err=> showError(err))
+    .finally(()=> session.loading--);
+}
+
+export function getSession(){
+  return session;
+}
+
+export function showError(err: any){
+  console.error(err);
+  session.messages.push({ type: "error", text: err.message ?? err});
+  toast.error( err.message ?? err);
+}
+
+export function useLogin(){
+  const router = useRouter();
+
+  return {
+    async login(email: string, password: string): Promise< User | null> {
+      const response = await api("users/login", { email, password });
+
+      session.user = response.user;
+      session.token = response.token;
+
+      router.push(session.redirectUrl || "/");
+      return session.user;
+    },
+    logout(){
+      session.user = null;
+      router.push("/login");
     }
-
-    return fetcher.rest(url, method, data, headers)
-        .catch(err => {
-            console.error({err});
-        })
-}
-
-export function getSession() {
-    return session;
-}
-
-export async function useLogin(email: string | undefined, password: string | undefined) {
-    const userData = {
-        email: email,
-        password: password
-    }
-
-    const response = await api("users/login", "POST", userData); //change this to userData after testing
-    session.user = response.data.user; //update the user
-    if(session.user) {
-        session.user.token = response.data.token;
-    }
-    return response;
-}
-
-export function useLogout() {
-    session.user = null; 
-}
-
-export async function createUser(name: string, email: string, password: string) {
-    const newUser = {
-        name: name,
-        email: email,
-        password: password,
-        role: "user"
-    } as User
-
-    const response = await api("users/", 'POST', newUser);
-                     await useLogin(email, password);
-
-    return response;
-}
-
-export async function deleteUser(id: string) {
-    return api(`users/${id}`, "DELETE")
-}
-
-export async function getAllUsers() {
-    const response = await api("users/", 'GET');
-    return response;
-}
-
-//returns whatever entries have searchTerm in its 
-export async function searchUsers(searchTerm: string) {
-    const response = await api(`users/search/${searchTerm}`, 'GET')
-    return response;
+  }
 }
