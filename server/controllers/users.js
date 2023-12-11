@@ -1,116 +1,70 @@
-const data = require('../data/users.json');
-const jwt = require('jsonwebtoken');
-const { connect, ObjectId } = require('./mongo');
 
-const COLLECTION_NAME = 'users';
+const express = require('express');
+const { getAll, get, search, create, update, remove, login, register,seed } = require('../models/users');
+const { requireUser } = require('../middleware/authorization');
+const router = express.Router();
 
-const collection = async () => { //returns the users collection
-    const database = await connect();
-    return database.collection(COLLECTION_NAME);
-}
+router.get('/', requireUser(true), async (req, res, next) => {
+    console.log("YO");
+    res.send(await getAll());
 
-const getAll = async (page=1, pageSize=30) => {
-    const coll = await collection();
-    const items = await coll
-        .find()
-        .skip((page-1) * pageSize)
-        .limit(pageSize)
-        .toArray();
-    const total = await coll.countDocuments();
-    return { items, total };
-}
+})
+.get('/search', requireUser() , (req, res, next) => {
 
-const getItemById = async (id) => {
-    const coll = await collection();
-    const item = await coll
-        .findOne({_id: new ObjectId(id)});
-    return item;
-}  
+    const results = search(req.query.q);
+    res.send(results);
+})
+.get('/:id', requireUser(), (req, res, next) => {
 
-const addItem = async (item) => {
-    const coll = await collection();
-    const result = await coll.insertOne(item)
-    item._id = result.insertedId;
-    return item;
-}
+    const user = get(+req.params.id);
+    res.send( user );
 
-const updateItem = async (item) => {
-    const coll = await collection();
-    const { _id, ...updatedFields } = item;
+})
+.post('/', requireUser(true), (req, res, next) => {
 
-    const result = await coll.findOneAndUpdate(
-        { _id: new ObjectId(_id) },
-        { $set: updatedFields },
-        { returnDocument: 'after' }
-    );
+    const user = create(req.body);
+    res.send(user);
 
-    return result;
-}
+})
+.post('/register', (req, res, next) => {
 
-const deleteItem = async (id) => {
-    const coll = await collection();
-    const result = await coll.deleteOne({ _id: new ObjectId(id) });
-    return result.deletedCount;
-}
+    const user = register(req.body);
+    res.send(user);
 
-const search = async (searchTerm, page = 1, pageSize = 30) => {
-    const coll = await collection();
-    const query = {
-        $or: [
-            { name: { $regex: searchTerm, $options: 'i' } }
-        ]
-    };
-    const items = await coll.find(query).skip((page - 1) * pageSize).limit(pageSize).toArray();
-    const total = await coll.countDocuments(query);
-    return { items, total };
-}
+})
+.post('/login', (req, res, next) => {
 
-const login = async (email, password) => {
-    const coll = await collection();
-    const user = await coll.findOne({ email });
-    if (!user) {
-        throw new Error('User not found');
-    }
-    if (user.password !== password) {
-        throw new Error('Invalid password');
-    }
+    login(req.body.email, req.body.password)
+    .then(user => {
+        res.send(user);
+    }).catch(next)
 
-    const cleanUser = { ...user, password: undefined };
-    const token = await generateTokenAsync(cleanUser, process.env.JWT_SECRET, '1d');
-
-    return { user: cleanUser, token };
-}
-
-const generateTokenAsync = (user, secret, expiresIn) => {
-    return new Promise( (resolve, reject) => {
-        jwt.sign(user, secret, { expiresIn }, (err, token) => {
-            if (err) {
-                reject(err); //triggers .catch
-            } else {
-                resolve(token); //triggers .then
-            }
+})
+.patch('/:id', requireUser(), (req, res, next) => {
+    
+    if(req.user.id !== +req.params.id && !req.user.admin) {
+        return next({
+            status: 403,
+            message: 'You can only edit your own account. (Unless you are an admin)'
         });
-    });
-}
+    }
+    req.body.id = +req.params.id;
+    const user = update(req.body);
+    res.send(user);
+  
+})
+.delete('/:id', requireUser(true), (req, res, next) => {
+    
+    remove(+req.params.id);
+    res.send({message: 'User removed'});
+})
+.post('/seed', (req, res, next) => {
 
-function verifyTokenAsync(token) {
-    return new Promise( (resolve, reject) => {
-        jwt.verify(token, process.env.JWT_SECRET ?? "", (err, user) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(user);
-            }
-        });
-    });
-}
+    seed()
+    .then(() => {
+      res.send({message: 'users seeded'});
+    }).catch(next);
+  
+  })
 
-const seed = async () => {
-    const coll = await collection();
-    const result = await coll.insertMany(data.users);
-    return result.insertedCount;
-}
-
-module.exports = {
-    getAll, search, getItemById, addItem, updateItem, deleteItem, seed, login, generateTokenAsync, verifyTokenAsync
-};
+module.exports = router;
