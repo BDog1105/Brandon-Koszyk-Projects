@@ -6,13 +6,13 @@
   const { login, logout } = useLogin()
 
   const doLogin1 = () => {
-    login('atuny0@sohu.com', '9uQFF1Lh')
+    login('shaq@nba.com', 'Magic')
   }
   const doLogin2 = () => {
     login('hbingley1@plala.or.jp', 'CQutx25i8r') 
   }
   const doLogin3 = () => {
-    login('rshawe2@51.la', 'OWsTbMUgFc')
+    login('quandale@dingle', 'rehehehehe')
   }
 
   const doLogout = () => {
