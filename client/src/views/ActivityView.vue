@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import { workouts, type workout, addAWorkout  } from '../model/workouts';
+import { workouts, type workout, addAWorkout  } from '../model/exercises';
 import { getSession } from '@/model/session'
 import { useToast } from "vue-toastification";
 import AddWorkoutForm from "@/components/AddWorkoutForm.vue"
-import WorkoutList from "@/components/WorkoutList.vue";
+import WorkoutList from "@/components/WorkoutPost.vue";
 
 const toast = useToast();
 const isActive = ref(false);
