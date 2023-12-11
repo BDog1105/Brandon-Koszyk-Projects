@@ -4,7 +4,7 @@ import { workouts, type workout, addAWorkout } from '../model/workouts';
 import { useToast } from "vue-toastification";
 import { getSession } from '@/model/session';
 import AddWorkoutForm from "@/components/AddWorkoutForm.vue"
-import WorkoutList from "@/components/WorkoutList.vue";
+import WorkoutList from "@/components/WorkoutPost.vue";
 
 
 const toast = useToast();
