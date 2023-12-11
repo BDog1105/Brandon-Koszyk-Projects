@@ -31,12 +31,6 @@ const router = createRouter({
       component: () => import("../views/AdminView.vue"),
       beforeEnter: requireAdmin, 
     },
-    {
-      path: "/people-search",
-      name: "people-search",
-      component: () => import("../views/PeopleSearch.vue"),
-      beforeEnter: requireLogin,
-    },
   ],
 });
 

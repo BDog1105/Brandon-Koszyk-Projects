@@ -42,13 +42,13 @@
     </a>
     <div class="navbar-dropdown">
           <a class="navbar-item" @click.prevent="doLogin1">
-              Terry (Admin)
+              Shaq (Admin)
             </a>
             <a class="navbar-item" @click.prevent="doLogin2">
               Sheldon
             </a>
             <a class="navbar-item" @click.prevent="doLogin3">
-              Terrill
+              Quandale
             </a>
             <hr class="navbar-divider">
             <a class="navbar-item">
