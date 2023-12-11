@@ -34,7 +34,7 @@ const handleWorkoutAdded = (workoutData: any) => {
 
 
   console.log(newWorkout);
-  addAWorkout(newWorkout as any).then((data) => {
+  addAWorkout(newWorkout as any).then((data: any) => {
     toast.success("Workout added ");
     console.log(data);
 
