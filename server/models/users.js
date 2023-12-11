@@ -1,75 +1,14 @@
-// @ts-check
-/**
- * @typedef {Object} Bank
- * @property {string} cardExpire
- * @property {string} cardNumber
- * @property {string} cardType
- * @property {string} currency
- * @property {string} iban
- */
+const { ObjectId, connect } = require('./mongo');
 
-/**
- * @typedef {Object} Coordinates
- * @property {number} lat
- * @property {number} lng
- */
-
-/**
- * @typedef {Object} Address
- * @property {string} address
- * @property {string} [city]
- * @property {Coordinates} coordinates
- * @property {string} postalCode
- * @property {string} state
- */
-
-/**
- * @typedef {Object} Company
- * @property {Address} address
- * @property {string} department
- * @property {string} name
- * @property {string} title
- */
-
-/**
- * @typedef {Object} BaseUser
- * @property {string} firstName
- * @property {string} lastName
- * @property {string} maidenName
- * @property {number} age
- * @property {string} gender
- * @property {string} email
- * @property {string} phone
- * @property {string} username
- * @property {string} password
- * @property {string} birthDate
- * @property {string} image
- * @property {string} bloodGroup
- * @property {number} height
- * @property {string} macAddress
- * @property {string} university
- * @property {Bank} bank
- * @property {Company} company
- * @property {string} ein
- * @property {string} ssn
- * @property {string} userAgent
- */
-
-/**
- * @typedef {Object} HasId
- * @property {number} id
- */
-
-/**
- * @typedef {BaseUser & HasId} User
- */
-
-/**
- * @type { {users: User[]} }
- */
 const data = require("../data/users.json");
 
 const jwt = require('jsonwebtoken');
+
+const COLLECTION_NAME = 'users';
+async function getCollection() {
+  const db = await connect();
+  return db.collection(COLLECTION_NAME);
+}
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
@@ -77,13 +16,15 @@ const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
 /**
  * @returns {User[]} An array of products.
  */
-function getAll() {
-  return data.users;
+async function getAll() {
+  const col = await getCollection();
+  return await col.find({}).toArray();
 }
 
 /**
  * @param {number} id - The product's ID.
  */
+
 function get(id) {
   const item = data.users.find(x => x.id === id);
   if(!item) {
@@ -151,20 +92,24 @@ function register(values) {
  * @param {string} password
  * @returns { Promise< { user: User, token: string}> } The created user.
  */
-async function  login(email, password) {
-
-  const item = data.users.find(x => x.email === email);
-  if(!item) {
-    throw new Error('User not found');
+async function login(email, password) {
+  const col = await getCollection();
+  const user = await col.findOne({ email: email });
+  if (!user) {
+    throw {
+      message: "User not found",
+      status: 404,
+    };
   }
-
-  if(item.password !== password) {
-    throw new Error('Wrong password');
+  if (user.password !== password) {
+    throw {
+      message: "Password is incorrect",
+      status: 400,
+    };
   }
-
-  const user = { ...item, password: undefined, };
-  const token = await generateJWT(user);
-  return { user, token };
+  const BeastlyUser = { ...user, password: undefined };
+  const token = await generateJWT(BeastlyUser);
+  return { user: BeastlyUser, token: token };
 }
 
 /**
@@ -218,7 +163,13 @@ function verifyJWT(token) {
   })
 }
 
+async function seed() {
+  const col = await getCollection();
+
+  await col.insertMany(data.users);
+}
+
 
 module.exports = {
-  getAll, get, search, create, update, remove, login, register, generateJWT, verifyJWT
+  getAll, get, search, create, update, remove, login, register, generateJWT, verifyJWT, seed
 };
