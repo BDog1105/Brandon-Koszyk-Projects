@@ -24,8 +24,8 @@ Content-Type: application/json
 
 {
   "workout": {
-    "name": "Chest Day",
-    "description": "Chest day is the best day",
+    "name": "Sharms Day",
+    "description": "Shoulders, Tris and Bis",
     "userId": 1
   },
   "userId": 1
@@ -42,10 +42,10 @@ POST http://localhost:3000/api/v1/users
 Content-Type: application/json
 
 {
-  "firstName": "Josh",
-  "lastName": "Chaffy",
-  "email": "joshchaffy@gmail.com",
-  "password": "joshchaffy"
+  "firstName": "Brandon",
+  "lastName": "Koszyk",
+  "email": "koszykb1@gmail.com",
+  "password": "koszyk"
 }
 
 ###
@@ -53,7 +53,7 @@ PATCH http://localhost:3000/api/v1/users/4
 Content-Type: application/json
 
 {
-  "firstName": "Josh Chaffy"
+  "firstName": "Brandon Koszyk"
 }
 
 ###
@@ -61,10 +61,10 @@ POST http://localhost:3000/api/v1/users/register
 Content-Type: application/json
 
 {
-  "firstName": "Josh",
-  "lastName": "Chaffy",
-  "email": "joshchaffy@gmail.com",
-  "password": "joshchaffy"
+  "firstName": "Brandon",
+  "lastName": "Koszyk",
+  "email": "koszykb1@gmail.com",
+  "password": "koszyk"
 }
 
 ###
@@ -72,6 +72,6 @@ POST http://localhost:3000/api/v1/users/login
 Content-Type: application/json
 
 {
-  "email": "joshchaffy@gmail.com",
-  "password": "joshchaffy"
+  "email": "koszykb1@gmail.com",
+  "password": "koszyk"
 }
